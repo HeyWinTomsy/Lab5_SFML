@@ -1,0 +1,7 @@
+{
+  "name": "lab5-sfml",
+  "version-string": "1.0.0",
+  "dependencies": [
+    "sfml"
+  ]
+}
