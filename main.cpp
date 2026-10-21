@@ -27,14 +27,14 @@ int main()
 
     window.setFramerateLimit(60);
 
-    // Parameters
-    float length = 1.f;             // metres
-    float initialAngle = 30.f;       // degrees
+    // Параметри
+    float length = 1.f;             // метри
+    float initialAngle = 30.f;       // градуси
     float angle = toRadians(initialAngle);
     float angularVelocity = 0.f;
     float elapsedTime = 0.f;
     float simulationTime = 0.f;
-    float scale = 180.f;             // pixels per metre
+    float scale = 180.f;             // піксель/метр
 
     bool running = false;
 
@@ -73,7 +73,6 @@ int main()
     {
         float dt = frameClock.restart().asSeconds();
 
-        // Avoid a large time step after moving or resizing the window.
         if (dt > 0.05f)
             dt = 0.05f;
 
@@ -141,9 +140,6 @@ int main()
             }
         }
 
-        // Equation of motion:
-        // theta'' = -(g / L) * sin(theta)
-        // Numerical integration: semi-implicit Euler method.
         if (running)
         {
             float angularAcceleration =
@@ -164,7 +160,7 @@ int main()
 
         sf::Vector2f bobPosition(bobX, bobY);
 
-        // Draw rod between pivot and bob.
+        // точка кріплення
         float dx = bobX - pivotPosition.x;
         float dy = bobY - pivotPosition.y;
         float rodLength = std::sqrt(dx * dx + dy * dy);
@@ -175,7 +171,7 @@ int main()
         rod.setPosition(pivotPosition);
         rod.setRotation(sf::degrees(rodAngle));
 
-        // Theoretical small-angle period.
+        // теоретичний кут
         float theoreticalPeriod = 2.f * PI * std::sqrt(length / G);
 
         std::ostringstream text;
@@ -198,7 +194,7 @@ int main()
 
         window.clear(sf::Color(24, 28, 38));
 
-        // Reference line below the pivot.
+        // стеля
         sf::RectangleShape reference({260.f, 1.f});
         reference.setFillColor(sf::Color(65, 70, 82));
         reference.setPosition({370.f, pivotPosition.y});
@@ -216,8 +212,6 @@ int main()
         }
         else
         {
-            // The simulation still runs if the font is unavailable.
-            // Put arial.ttf in the project folder to enable text.
         }
 
         window.display();
